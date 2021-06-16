@@ -5,17 +5,20 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int day = 30;
     return Scaffold(
       appBar: AppBar(
-          title: Center(
-        child: Text("Demo 1"),
-      )),
+        title: Center(
+          child: Text("Demo 1"
+          ),
+        ),
+      ),
       body: Center(
         child: Container(
-            child: Text("wellcome to $day days of flutter by hritthik")),
+          child: Text("welcome to 30 days of flutter"),
+       ), 
       ),
-      drawer: Drawer(),
+      drawer: Drawer(
+      ),
     );
   }
 }
