@@ -1,7 +1,9 @@
+import 'dart:html';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Pages/home_page.dart';
+import 'package:flutter_application_1/Pages/utils/routes.dart';
 
 class Loginpage extends StatelessWidget {
   @override
@@ -23,18 +25,20 @@ class Loginpage extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-            child: Column(
-              children: [
-                TextFormField(
-                  decoration: InputDecoration(
-                      hintText: "Enter Username", labelText: "User name"),
-                ),
-                TextFormField(
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      hintText: "Enter Password", labelText: "Password"),
-                )
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: InputDecoration(
+                        hintText: "Enter Username", labelText: "User name"),
+                  ),
+                  TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                        hintText: "Enter Password", labelText: "Password"),
+                  )
+                ],
+              ),
             ),
           ),
           SizedBox(
@@ -49,10 +53,12 @@ class Loginpage extends StatelessWidget {
                 fontSize: 25,
               ),
             ),
+            style: TextButton.styleFrom(minimumSize: Size(100, 50)),
             // style:
             //     TextButton.styleFrom(textStyle: TextStyle(color: Colors.black)),
             onPressed: () {
               print("signin successfull");
+              Navigator.pushNamed(context, MyRoutes.homeRoutes);
               //Navigator.push(
               //context, MaterialPageRoute(builder: (context) => Homepage()));
             },
