@@ -8,6 +8,23 @@ class Signuppage extends StatefulWidget {
 
 class _SignuppageState extends State<Signuppage> {
   bool buttonChange = false;
+  var _confirmpass;
+  final _formKey = GlobalKey<FormState>();
+
+  movetologin(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        buttonChange = true;
+      });
+      await Future.delayed(Duration(seconds: 1));
+      await Navigator.pushNamed(context, MyRoutes.logingRoutes);
+      setState(() {
+        buttonChange = false;
+      });
+    }
+    return null;
+  }
+
   Widget build(BuildContext context) {
     return Material(
       color: Colors.white,
@@ -33,36 +50,67 @@ class _SignuppageState extends State<Signuppage> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 30),
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                TextFormField(
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  decoration: InputDecoration(
-                      hintText: "Enter Username",
-                      hintStyle: TextStyle(color: Colors.black26),
-                      labelText: "Username"),
-                ),
-                TextFormField(
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  decoration: InputDecoration(
-                      hintText: "Enter Email Address",
-                      hintStyle: TextStyle(color: Colors.black26),
-                      labelText: "Email"),
-                ),
-                TextFormField(
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      hintText: "Enter Password",
-                      hintStyle: TextStyle(color: Colors.black26),
-                      labelText: "Password"),
-                ),
-                TextFormField(
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  obscureText: true,
-                  decoration: InputDecoration(labelText: "Confirm Password"),
-                ),
-              ],
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    decoration: InputDecoration(
+                        hintText: "Enter Username",
+                        hintStyle: TextStyle(color: Colors.black26),
+                        labelText: "Username"),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return ("Username can't be Empty");
+                      }
+                    },
+                  ),
+                  TextFormField(
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    decoration: InputDecoration(
+                        hintText: "Enter Email Address",
+                        hintStyle: TextStyle(color: Colors.black26),
+                        labelText: "Email"),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Email can't be Empty";
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    obscureText: true,
+                    decoration: InputDecoration(
+                        hintText: "Enter Password",
+                        hintStyle: TextStyle(color: Colors.black26),
+                        labelText: "Password"),
+                    validator: (value) {
+                      value = _confirmpass;
+                      if (value!.isEmpty) {
+                        return "Password can't be empty";
+                      } else if (value.length < 5) {
+                        return "Password length should be atlast 6 ";
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    obscureText: true,
+                    decoration: InputDecoration(labelText: "Confirm Password"),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Confirm Password can't be empty";
+                      } else if (value != _confirmpass) {
+                        return "Password must be same as above";
+                      }
+                      return null;
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -70,13 +118,7 @@ class _SignuppageState extends State<Signuppage> {
           height: 15,
         ),
         InkWell(
-          onTap: () async {
-            setState(() {
-              buttonChange = true;
-            });
-            await Future.delayed(Duration(seconds: 1));
-            Navigator.pushNamed(context, MyRoutes.logingRoutes);
-          },
+          onTap: () => movetologin(context),
           child: AnimatedContainer(
             duration: Duration(seconds: 1),
             alignment: Alignment.center,
@@ -84,7 +126,10 @@ class _SignuppageState extends State<Signuppage> {
             width: buttonChange ? 50 : 140,
             //color: Colors.blueAccent,
             child: buttonChange
-                ? Icon(Icons.done, color: Colors.white,)
+                ? Icon(
+                    Icons.done,
+                    color: Colors.white,
+                  )
                 : Text(
                     "SIGNUP",
                     style: TextStyle(
@@ -97,7 +142,7 @@ class _SignuppageState extends State<Signuppage> {
                 borderRadius: buttonChange
                     ? BorderRadius.circular(50)
                     : BorderRadius.circular(12),
-                color: Colors.blueAccent),
+                color: Colors.deepOrange),
           ),
         ),
       ]),

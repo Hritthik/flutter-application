@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Pages/home_page.dart';
 import 'package:flutter_application_1/Pages/login_page.dart';
+import 'package:flutter_application_1/Pages/practice_Loginpage.dart';
 import 'package:flutter_application_1/Pages/signup_page.dart';
 import 'package:flutter_application_1/Pages/utils/routes.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +16,7 @@ class Myapp extends StatelessWidget {
     return MaterialApp(
 //     home: Homepage(),
       themeMode: ThemeMode.light,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
         fontFamily: GoogleFonts.lato().fontFamily,
@@ -24,10 +26,11 @@ class Myapp extends StatelessWidget {
       ),
       //initialRoute: "/signup",
       routes: {
-        "/": (context) => Signuppage(),
+        "/": (context) => Loginpage(),
         MyRoutes.homeRoutes: (context) => Homepage(),
         MyRoutes.logingRoutes: (context) => Loginpage(),
         MyRoutes.signupRoutes: (context) => Signuppage(),
+        //MyRoutes.practiceloginRoutes: (context) => PracticeLoginPage()
       },
     );
   }
